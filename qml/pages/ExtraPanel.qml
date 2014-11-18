@@ -8,6 +8,7 @@ SmoothPanel {
 
     signal toastMessage
     signal openBrowser
+    signal openYoutube
     signal turnOff
     signal switchInput
 
@@ -29,6 +30,16 @@ SmoothPanel {
             width: parent.width
             height: Theme.itemSizeSmall
             title: qsTr("Open link in browser")
+            onClicked: {
+                panel.active = false
+                panel.openYoutube()
+            }
+        }
+
+        ControlButton {
+            width: parent.width
+            height: Theme.itemSizeSmall
+            title: qsTr("Open Youtube video")
             onClicked: {
                 panel.active = false
                 panel.openBrowser()

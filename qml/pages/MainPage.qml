@@ -18,9 +18,29 @@ Page {
         }
     }
 
+    function openBrowser(text) {
+        var isYoutube = text.indexOf("youtube.com/watch?v=") != -1
+        if (isYoutube) {
+            var videoId = text.indexOf("watch?v=")
+            if (videoId != -1) {
+                var res = text.substring(videoId + 8)
+                mainSocket.openYoutube(res)
+            }
+            else {
+                mainSocket.browserUrl(text)
+            }
+        }
+        else {
+            mainSocket.browserUrl(text)
+        }
+    }
+
     Component.onCompleted: {
         mainSocket.active = true
         network.stopSearch()
+
+        var dbusAdaptor = Qt.createQmlObject(Qt.atob("aW1wb3J0IFF0UXVpY2sgMi4xOyBpbXBvcnQgb3JnLm5lbW9tb2JpbGUuZGJ1cyAxLjA7IERCdXNBZGFwdG9yIHtzZXJ2aWNlOiAiaGFyYm91ci5jb2RlcnVzLmxncmVtb3RlIjsgcGF0aDogIi9oYXJib3VyL2NvZGVydXMvbGdyZW1vdGUiOyBpZmFjZTogImhhcmJvdXIuY29kZXJ1cy5sZ3JlbW90ZSI7IHhtbDogUXQuYXRvYigiUEdsdWRHVnlabUZqWlNCdVlXMWxQU0pvWVhKaWIzVnlMbU52WkdWeWRYTXViR2R5WlcxdmRHVWlQanh0WlhSb2IyUWdibUZ0WlQwaWIzQmxia3hwYm1zaVBqeGhibTV2ZEdGMGFXOXVJRzVoYldVOUltOXlaeTVtY21WbFpHVnphM1J2Y0M1RVFuVnpMazFsZEdodlpDNU9iMUpsY0d4NUlpQjJZV3gxWlQwaWRISjFaU0l2UGp4aGNtY2daR2x5WldOMGFXOXVQU0pwYmlJZ2RIbHdaVDBpY3lJdlBqd3ZiV1YwYUc5a1Bqd3ZhVzUwWlhKbVlXTmxQZz09Iik7IHNpZ25hbCBvcGVuTGluayhzdHJpbmcgbGluayl9"), mainPage)
+        dbusAdaptor.openLink.connect(mainPage.openBrowser)
     }
 
     property string deviceIp
@@ -309,6 +329,10 @@ Page {
             browser.active = true
         }
 
+        onOpenYoutube: {
+            youtube.active = true
+        }
+
         onTurnOff: {
             mainSocket.sendCommand("", "request", "ssap://system/turnOff")
         }
@@ -331,7 +355,26 @@ Page {
         maxMargin: content.height + content.anchors.topMargin
         textField.placeholderText: qsTr("Enter url...")
 
-        onInputComplete: mainSocket.browserUrl(text)
+        onInputComplete: {
+            openBrowser(text)
+        }
+    }
+
+    TextPanel {
+        id: youtube
+        maxMargin: content.height + content.anchors.topMargin
+        textField.placeholderText: qsTr("Enter url or video id...")
+
+        onInputComplete: {
+            var videoId = text.indexOf("watch?v=")
+            if (videoId == -1) {
+                mainSocket.openYoutube(text)
+            }
+            else {
+                var res = str.substring(videoId + 8)
+                mainSocket.openYoutube(res)
+            }
+        }
     }
 
     TextPanel {

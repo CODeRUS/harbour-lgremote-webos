@@ -234,4 +234,8 @@ WebSocket {
     function browserUrl(url) {
         launchWithPayload({"id": "com.webos.app.browser", "target": url})
     }
+
+    function openYoutube(video) {
+        launchWithPayload({"id": "youtube.leanback.v4", "params": { "contentTarget": ("http://www.youtube.com/tv?v=" + video) }})
+    }
 }
