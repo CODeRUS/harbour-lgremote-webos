@@ -1,0 +1,4 @@
+module harbour.coderus.websockets
+plugin declarative_qmlwebsockets
+classname QtWebSocketsDeclarativeModule
+typeinfo plugins.qmltypes

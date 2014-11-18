@@ -1,0 +1,3 @@
+This directory contains QtWebsockets compiled with SailfishOS 1410 SDK
+libQtWebSockets - no changes
+libdeclarative_qmlwebsockets - changed module name to harbour.coderus.websockets, compiled with rpath /usr/share/harbour-lgremote-webos/lib9
