@@ -26,7 +26,7 @@ SmoothPanel {
                     height: Theme.itemSizeSmall
                     title: model.label
                     onClicked: {
-                        socket.sendCommand("", "request", "ssap://tv/switchInput", {"inputId": model.id})
+                        socket.sendSwitchInput(model.id)
                         panel.active = false
                     }
                 }

@@ -53,25 +53,20 @@ Page {
     Connections {
         target: appWindow
         onPauseAction: {
-            pointerSocket.sendInput("button", "PAUSE")
+            //pointerSocket.sendInput("button", "PAUSE")
+            mainSocket.sendPause()
         }
         onPlayAction: {
-            pointerSocket.sendInput("button", "PLAY")
+            //pointerSocket.sendInput("button", "PLAY")
+            mainSocket.sendPlay()
         }
         onVolumeUpAction: {
-            pointerSocket.sendInput("button", "VOLUMEUP")
+            mainSocket.sendVolumeUp()
+            //pointerSocket.sendInput("button", "VOLUMEUP")
         }
         onVolumeDownAction: {
-            pointerSocket.sendInput("button", "VOLUMEDOWN")
-        }
-        onKeypressEnter: {
-            mainSocket.sendCommand("", "request", "ssap://com.webos.service.ime/sendEnterKey")
-        }
-        onKeypressBackspace: {
-            mainSocket.sendCommand("", "request", "ssap://com.webos.service.ime/deleteCharacters", {"count": 1})
-        }
-        onKeypressText: {
-            mainSocket.sendCommand("", "request", "ssap://com.webos.service.ime/insertText", {"text": text, "replace": false})
+            mainSocket.sendVolumeDown()
+            //pointerSocket.sendInput("button", "VOLUMEDOWN")
         }
     }
 
@@ -124,17 +119,17 @@ Page {
         inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
         onTextChanged: {
             if (text.length == 1) {
-                keypressText(text)
+                mainSocket.sendText(text)
             }
             text = ""
         }
         Keys.onPressed: {
             if (event.key == Qt.Key_Backspace) {
-                keypressBackspace()
+                mainSocket.sendBackspace()
                 event.accepted = true;
             }
             else if (event.key == Qt.Key_Return) {
-                keypressEnter()
+                mainSocket.sendEnter()
                 event.accepted = true;
             }
         }
@@ -150,10 +145,6 @@ Page {
             rightMargin: Theme.paddingLarge
         }
         property int smallItemSize: (width - (Theme.itemSizeExtraLarge * 2)) / 4
-        //visible: !invisibleInput.focus
-        //         && !touchpad.active
-        //         && !channels.active
-        //         && !actions.active
 
         spacing: Theme.paddingMedium
 
@@ -182,7 +173,7 @@ Page {
                 titleSize: height / 2
                 color: down ? Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity) : "transparent"
                 borderWidth: 0
-                onClicked: pointerSocket.sendInput("button", "VOLUMEDOWN")
+                onClicked: mainSocket.sendVolumeDown() //pointerSocket.sendInput("button", "VOLUMEDOWN")
             }
 
             ProgressCircleBase {
@@ -191,7 +182,7 @@ Page {
 
                 width: Theme.itemSizeExtraLarge
                 height: Theme.itemSizeExtraLarge
-                value: mainSocket.volume / 50
+                value: mainSocket.volume / 100
 
                 Column {
                     anchors.centerIn: parent
@@ -209,7 +200,7 @@ Page {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: mainSocket.sendCommand("", "request", "ssap://audio/setMute", {"mute": !mainSocket.muting})
+                    onClicked: mainSocket.toggleMute()
                 }
             }
 
@@ -220,7 +211,7 @@ Page {
                 titleSize: height / 2
                 color: down ? Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity) : "transparent"
                 borderWidth: 0
-                onClicked: pointerSocket.sendInput("button", "VOLUMEUP")
+                onClicked: mainSocket.sendVolumeUp() //pointerSocket.sendInput("button", "VOLUMEUP")
             }
 
             ControlButton {
@@ -334,7 +325,7 @@ Page {
         }
 
         onTurnOff: {
-            mainSocket.sendCommand("", "request", "ssap://system/turnOff")
+            mainSocket.sendTurnOff()
         }
 
         onSwitchInput: {
@@ -347,7 +338,7 @@ Page {
         maxMargin: content.height + content.anchors.topMargin
         textField.placeholderText: qsTr("Enter message...")
 
-        onInputComplete: mainSocket.sendCommand("", "request", "ssap://system.notifications/createToast", {"message": text})
+        onInputComplete: mainSocket.sendShowToast(text)
     }
 
     TextPanel {

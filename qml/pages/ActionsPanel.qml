@@ -78,6 +78,8 @@ SmoothPanel {
         Row {
             ControlButton {
                 width: panel.width / 3
+                title: qsTr("HOME")
+                onClicked: socket.sendInput("button", "HOME")
             }
             ControlButton {
                 width: panel.width / 3

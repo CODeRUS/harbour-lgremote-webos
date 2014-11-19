@@ -195,10 +195,6 @@ WebSocket {
         }
     }
 
-    function sendPin(pincode) {
-        mainSocket.sendCommand("pin_", "request", "ssap://pairing/setPin", {"pin": pincode})
-    }
-
     function sendCommand(prefix, msgtype, uri, payload) {
         var msg = {}
         msg["id"] = prefix + mainSocket.getMsgId()
@@ -209,6 +205,10 @@ WebSocket {
         }
 
         mainSocket.sendLogMessage(JSON.stringify(msg))
+    }
+
+    function sendPin(pincode) {
+        mainSocket.sendCommand("pin_", "request", "ssap://pairing/setPin", {"pin": pincode})
     }
 
     function sendEnter() {
@@ -237,5 +237,53 @@ WebSocket {
 
     function openYoutube(video) {
         launchWithPayload({"id": "youtube.leanback.v4", "params": { "contentTarget": ("http://www.youtube.com/tv?v=" + video) }})
+    }
+
+    function sendPause() {
+        mainSocket.sendCommand("pause_", "request", "ssap://media.controls/pause")
+    }
+
+    function sendPlay() {
+        mainSocket.sendCommand("play_", "request", "ssap://media.controls/play")
+    }
+
+    function sendStop() {
+        mainSocket.sendCommand("stop_", "request", "ssap://media.controls/stop")
+    }
+
+    function sendVolumeUp() {
+        mainSocket.sendCommand("volumeup_", "request", "ssap://audio/volumeUp")
+    }
+
+    function sendVolumeDown() {
+        mainSocket.sendCommand("volumedown_", "request", "ssap://audio/volumeDown")
+    }
+
+    function toggleMute() {
+        mainSocket.sendCommand("", "request", "ssap://audio/setMute", {"mute": !mainSocket.muting})
+    }
+
+    function sendBackspace(count) {
+        mainSocket.sendCommand("", "request", "ssap://com.webos.service.ime/deleteCharacters", {"count": count == undefined ? 1 : count})
+    }
+
+    function sendText(text, replace) {
+        mainSocket.sendCommand("", "request", "ssap://com.webos.service.ime/insertText", {"text": text, "replace": replace == true})
+    }
+
+    function sendTurnOff() {
+        mainSocket.sendCommand("", "request", "ssap://system/turnOff")
+    }
+
+    function sendShowToast(text) {
+        mainSocket.sendCommand("", "request", "ssap://system.notifications/createToast", {"message": text})
+    }
+
+    function sendOpenChannel(channelId) {
+        socket.sendCommand("", "request", "ssap://tv/openChannel", {"channelId": channelId})
+    }
+
+    function sendSwitchInput(inputId) {
+        socket.sendCommand("", "request", "ssap://tv/switchInput", {"inputId": inputId})
     }
 }

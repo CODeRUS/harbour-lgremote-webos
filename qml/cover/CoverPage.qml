@@ -42,7 +42,13 @@ CoverBackground {
     }
 
     Column {
-        width: parent.width
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: Theme.paddingLarge
+        }
+
         spacing: Theme.paddingLarge
 
         Label {
@@ -59,22 +65,23 @@ CoverBackground {
             visible: currentApplicationId == "com.webos.app.livetv"
             text: currentChannelNumber + " " + currentChannelName
         }
+    }
 
-        Row {
-            height: mute.height
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: Theme.paddingMedium
-            visible: coverActionActive
 
-            Image {
-                id: mute
-                source: "../../images/" + (soundMuted ? "volume-muted" : "volume") + ".png"
-            }
+    Row {
+        height: mute.height
+        anchors.centerIn: parent
+        spacing: Theme.paddingMedium
+        visible: coverActionActive
 
-            Label {
-                text: soundVolume
-                anchors.verticalCenter: parent.verticalCenter
-            }
+        Image {
+            id: mute
+            source: "../../images/" + (soundMuted ? "volume-muted" : "volume") + ".png"
+        }
+
+        Label {
+            text: soundVolume
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 

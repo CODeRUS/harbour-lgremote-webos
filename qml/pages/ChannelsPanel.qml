@@ -76,7 +76,7 @@ SmoothPanel {
                 }
 
                 onClicked: {
-                    socket.sendCommand("", "request", "ssap://tv/openChannel", {"channelId": model.channelId})
+                    socket.sendOpenChannel(model.channelId)
                 }
             }
         }
