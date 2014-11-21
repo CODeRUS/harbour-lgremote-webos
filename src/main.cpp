@@ -65,10 +65,10 @@ int main(int argc, char *argv[])
     versionFile.close();
     int versionp1 = versionData.split("VERSION_ID=").last().split(".").at(1).toInt();
     if (versionp1 > 0) {
-        view->engine()->addImportPath("/usr/share/harbour-lgremote-webos/import9");
+        view->engine()->addImportPath("/usr/share/harbour-lgremote-webos/import/u9");
     }
     else {
-        view->engine()->addImportPath("/usr/share/harbour-lgremote-webos/import");
+        view->engine()->addImportPath("/usr/share/harbour-lgremote-webos/import/u8");
     }
 
     QScopedPointer<NetworkObserver> network(new NetworkObserver(app.data()));

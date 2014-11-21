@@ -6,6 +6,8 @@
 Name:       harbour-lgremote-webos
 
 # >> macros
+%define __provides_exclude_from ^%{_datadir}/.*$
+%define __requires_exclude ^libQt5WebSockets.*$
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
@@ -29,7 +31,6 @@ BuildRequires:  desktop-file-utils
 
 %description
 LG Remote for webOS Smart TV
-
 
 %prep
 %setup -q -n %{name}-%{version}

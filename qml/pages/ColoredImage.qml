@@ -1,6 +1,5 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import QtGraphicalEffects 1.0
 
 Image {
     id: image
@@ -33,6 +32,6 @@ Image {
             }
         "
     }
-    layer.enabled: imageSource != "" && !themeImage && image.highlighted
-    layer.samplerName: layer.enabled ? "imageSource" : ""
+    layer.enabled: !themeImage && image.highlighted
+    layer.samplerName: "imageSource"
 }

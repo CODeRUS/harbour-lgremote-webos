@@ -18,26 +18,31 @@ wslibs.files = \
     websockets/libQt5WebSockets.so \
     websockets/libQt5WebSockets.so.5 \
     websockets/libQt5WebSockets.so.5.3 \
-    websockets/libQt5WebSockets.so.5.3.3
-wslibs.path = /usr/share/harbour-lgremote-webos/lib
+    websockets/libQt5WebSockets.so.5.3.3 \
+    websockets/README
+wslibs.path = /usr/share/harbour-lgremote-webos/lib/u8
 
 wsqml.files = websockets/harbour
-wsqml.path = /usr/share/harbour-lgremote-webos/import
+wsqml.path = /usr/share/harbour-lgremote-webos/import/u8
 
 wslibs9.files = \
     websockets9/libQt5WebSockets.so \
     websockets9/libQt5WebSockets.so.5 \
     websockets9/libQt5WebSockets.so.5.3 \
-    websockets9/libQt5WebSockets.so.5.3.3
-wslibs9.path = /usr/share/harbour-lgremote-webos/lib9
+    websockets9/libQt5WebSockets.so.5.3.3 \
+    websockets9/README
+wslibs9.path = /usr/share/harbour-lgremote-webos/lib/u9
 
 wsqml9.files = websockets9/harbour
-wsqml9.path = /usr/share/harbour-lgremote-webos/import9
+wsqml9.path = /usr/share/harbour-lgremote-webos/import/u9
 
 images.files = images
 images.path = /usr/share/harbour-lgremote-webos
 
-INSTALLS += wslibs wsqml wslibs9 wsqml9 images
+readme.files = LIB_README_FOR_QA
+readme.path = /usr/share/harbour-lgremote-webos/lib
+
+INSTALLS += wslibs wsqml wslibs9 wsqml9 images readme
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
