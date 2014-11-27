@@ -5,8 +5,11 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
+    property bool searching: false
+
     function discover() {
         discoveredTargets.clear()
+        searching = true
         network.startSearch();
         timeoutTimer.restart()
     }
@@ -22,6 +25,9 @@ Page {
                                         "ip": result.ip,
                                "modelNumber": result.modelNumber,
                               "manufacturer": result.manufacturer})
+        }
+        onTimeout: {
+            searching = false
         }
     }
 
@@ -163,7 +169,7 @@ Page {
         anchors.centerIn: parent
         size: BusyIndicatorSize.Large
         running: visible
-        visible: discoveredTargets.count == 0
+        visible: discoveredTargets.count == 0 && searching
     }
 
     Label {

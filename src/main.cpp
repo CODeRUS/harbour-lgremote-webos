@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     app->setApplicationDisplayName("LG Remote");
     app->setApplicationName("LG Remote");
-    app->setApplicationVersion("0.0.1");
-    app->setOrganizationName("coderus");
+    app->setApplicationVersion("0.1.4");
+    app->setOrganizationName("harbour-lgremote-webos");
 
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     view->setTitle("LG Remote");
