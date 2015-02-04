@@ -11,6 +11,7 @@ SmoothPanel {
     signal openYoutube
     signal turnOff
     signal switchInput
+    signal touchAcceleration
 
     Column {
         id: content
@@ -49,10 +50,10 @@ SmoothPanel {
         ControlButton {
             width: parent.width
             height: Theme.itemSizeSmall
-            title: qsTr("Turn off TV")
+            title: qsTr("Change touchpad acceleration")
             onClicked: {
                 panel.active = false
-                panel.turnOff()
+                panel.touchAcceleration()
             }
         }
 
@@ -63,6 +64,16 @@ SmoothPanel {
             onClicked: {
                 panel.active = false
                 panel.switchInput()
+            }
+        }
+
+        ControlButton {
+            width: parent.width
+            height: Theme.itemSizeSmall
+            title: qsTr("Turn off TV")
+            onClicked: {
+                panel.active = false
+                panel.turnOff()
             }
         }
 

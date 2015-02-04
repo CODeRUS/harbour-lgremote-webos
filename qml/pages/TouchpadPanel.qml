@@ -110,7 +110,10 @@ SmoothPanel {
                 else {
                     lastDelta = 0.0
                     if (point1.pressed) {
-                        socket.sendMove(point1.x - point1.previousX, point1.y - point1.previousY)
+                        var accel = appWindow.configuration.value
+                        var dx = (point1.x - point1.previousX) * accel
+                        var dy = (point1.y - point1.previousY) * accel
+                        socket.sendMove(dx, dy)
                     }
                     else {
 
@@ -123,7 +126,7 @@ SmoothPanel {
                 anchors.fill: parent
                 border.width: 2
                 border.color: Theme.highlightDimmerColor
-                color: Theme.rgba(Theme.highlightBackgroundColor, root.down ? 1.0 : Theme.highlightBackgroundOpacity)
+                color: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
             }
 
             Label {

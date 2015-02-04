@@ -331,6 +331,12 @@ Page {
         onSwitchInput: {
             inputs.active = true
         }
+
+        onTouchAcceleration: {
+            acceleration.textField.text = appWindow.configuration.value
+            acceleration.textField.text = acceleration.textField.text.replace(".", ",")
+            acceleration.active = true
+        }
     }
 
     TextPanel {
@@ -389,6 +395,17 @@ Page {
         inputList: mainSocket.inputList
         maxMargin: content.height + content.anchors.topMargin
         socket: mainSocket
+    }
+
+    TextPanel {
+        id: acceleration
+        maxMargin: content.height + content.anchors.topMargin
+        textField.placeholderText: qsTr("Touchpad acceleration: 1-4")
+        textField.inputMethodHints: Qt.ImhDigitsOnly
+
+        onInputComplete: {
+            appWindow.configuration.value = parseFloat(text.replace(",", "."))
+        }
     }
 
     MouseArea {

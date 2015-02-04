@@ -17,7 +17,7 @@ SmoothPanel {
         anchors.fill: gridView
         border.width: 2
         border.color: Theme.highlightDimmerColor
-        color: Theme.rgba(Theme.highlightBackgroundColor, root.down ? 1.0 : Theme.highlightBackgroundOpacity)
+        color: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
     }
 
     SilicaGridView {

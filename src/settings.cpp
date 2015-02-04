@@ -32,7 +32,7 @@ void Settings::checkActivation(const QString &code)
     settings.setValue("code", code);
     settings.sync();
 
-    QString url(QByteArray::fromBase64("aHR0cHM6Ly9jb2RlcnVzLm9wZW5yZXBvcy5uZXQvd2hpdGVzb2Z0L2xncmVtb3RlLyUx="));
+    QString url(QByteArray::fromBase64("aHR0cHM6Ly9jb2RlcnVzLm9wZW5yZXBvcy5uZXQvd2hpdGVzb2Z0L2FjdGl2YXRpb24vJTE="));
     QObject::connect(nam->get(QNetworkRequest(QUrl(url.arg(code)))), SIGNAL(finished()), this, SLOT(onActivationReply()));
 }
 
