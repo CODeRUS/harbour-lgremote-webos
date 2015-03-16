@@ -15,13 +15,12 @@ Name:       harbour-lgremote-webos
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    LG Remote for webOS Smart TV
-Version:    0.1.5
+Version:    0.1.6
 Release:    1
 Group:      Qt/Qt
-License:    LICENSE
-URL:        http://example.org/
+License:    WTFPL
+URL:        https://github.com/CODeRUS/harbour-lgremote-webos
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  harbour-lgremote-webos.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
@@ -42,7 +41,8 @@ LG Remote for webOS Smart TV
 # >> build pre
 # << build pre
 
-%qtc_qmake5 
+%qtc_qmake5  \
+    VERSION=%{version}
 
 %qtc_make %{?_smp_mflags}
 

@@ -50,10 +50,67 @@ ApplicationWindow
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
     Component.onCompleted: {
-        var volumeControlItem = Qt.createQmlObject(Qt.atob("aW1wb3J0IFF0UXVpY2sgMi4wOyBpbXBvcnQgU2FpbGZpc2guTWVkaWEgMS4wOyBpbXBvcnQgb3JnLm5lbW9tb2JpbGUucG9saWN5IDEuMDsgSXRlbSB7aWQ6IHJvb3Q7IHNpZ25hbCB2b2x1bWVVcDsgc2lnbmFsIHZvbHVtZURvd247IE1lZGlhS2V5IHtlbmFibGVkOiBrZXlzUmVzb3VyY2UuYWNxdWlyZWQ7IGtleTogUXQuS2V5X1ZvbHVtZVVwOyBvblByZXNzZWQ6IHtyb290LnZvbHVtZVVwKCk7IHVwVGltZXIuaW50ZXJ2YWwgPSA0MDA7IHVwVGltZXIuc3RhcnQoKX0gb25SZWxlYXNlZDogdXBUaW1lci5zdG9wKCk7IFRpbWVyIHtpZDogdXBUaW1lcjsgcmVwZWF0OiB0cnVlOyBvblRyaWdnZXJlZDoge2ludGVydmFsID0gNjA7IHJvb3Qudm9sdW1lVXAoKX19fSBNZWRpYUtleSB7ZW5hYmxlZDoga2V5c1Jlc291cmNlLmFjcXVpcmVkOyBrZXk6IFF0LktleV9Wb2x1bWVEb3duOyBvblByZXNzZWQ6IHtyb290LnZvbHVtZURvd24oKTsgZG93blRpbWVyLmludGVydmFsID0gNDAwOyBkb3duVGltZXIuc3RhcnQoKX0gb25SZWxlYXNlZDogZG93blRpbWVyLnN0b3AoKTsgVGltZXIge2lkOiBkb3duVGltZXI7IHJlcGVhdDogdHJ1ZTsgb25UcmlnZ2VyZWQ6IHtpbnRlcnZhbCA9IDYwOyByb290LnZvbHVtZURvd24oKX19fSBQZXJtaXNzaW9ucyB7aWQ6IHBlcm1pc3Npb25zOyBlbmFibGVkOiBhcHBXaW5kb3cuYXBwbGljYXRpb25BY3RpdmUgJiYgYXBwV2luZG93LmNvdmVyQWN0aW9uQWN0aXZlOyBhcHBsaWNhdGlvbkNsYXNzOiAicGxheWVyIjsgUmVzb3VyY2Uge2lkOiBrZXlzUmVzb3VyY2U7IHR5cGU6IFJlc291cmNlLlNjYWxlQnV0dG9uOyBvcHRpb25hbDogdHJ1ZX19fQ=="), appWindow)
+        var volumeControlItem = Qt.createQmlObject("import QtQuick 2.1;" +
+        "import Sailfish.Media 1.0;" +
+        "import org.nemomobile.policy 1.0;" +
+        "Item {
+            id: root
+            signal volumeUp
+            signal volumeDown
+            MediaKey {
+                enabled: keysResource.acquired
+                key: Qt.Key_VolumeUp
+                onPressed: {
+                    root.volumeUp()
+                    upTimer.interval = 400
+                    upTimer.start()
+                }
+                onReleased: upTimer.stop()
+                Timer {
+                    id: upTimer
+                    repeat: true
+                    onTriggered: {
+                        interval = 60
+                        root.volumeUp()
+                    }
+                }
+            }
+            MediaKey {
+                enabled: keysResource.acquired
+                key: Qt.Key_VolumeDown
+                onPressed: {
+                    root.volumeDown()
+                    downTimer.interval = 400
+                    downTimer.start()
+                }
+                onReleased: downTimer.stop()
+                Timer {
+                    id: downTimer
+                    repeat: true
+                    onTriggered: {
+                        interval = 60
+                        root.volumeDown()
+                    }
+                }
+            }
+            Permissions {
+                id: permissions
+                enabled: appWindow.applicationActive && appWindow.coverActionActive
+                applicationClass: \"player\"
+                Resource {
+                    id: keysResource
+                    type: Resource.ScaleButton
+                    optional: true
+                }
+            }
+        }", appWindow)
         volumeControlItem.volumeUp.connect(appWindow.volumeUpAction)
         volumeControlItem.volumeDown.connect(appWindow.volumeDownAction)
 
-        configuration = Qt.createQmlObject(Qt.atob("aW1wb3J0IFF0UXVpY2sgMi4xOyBpbXBvcnQgb3JnLm5lbW9tb2JpbGUuY29uZmlndXJhdGlvbiAxLjA7IENvbmZpZ3VyYXRpb25WYWx1ZSB7a2V5OiIvYXBwcy9oYXJib3VyLWxncmVtb3RlLXdlYm9zL3RvdWNocGFkQWNjZWxlcmF0aW9uIjsgZGVmYXVsdFZhbHVlOjEuMH0="), appWindow)
+        configuration = Qt.createQmlObject("import org.nemomobile.configuration 1.0;" +
+        "ConfigurationValue {
+            key: \"/apps/harbour-lgremote-webos/touchpadAcceleration\"
+            defaultValue: 1.0
+        }", appWindow)
     }
 }

@@ -24,6 +24,8 @@ WebSocket {
     property int volume: 0
     onVolumeChanged: soundVolume = volume
 
+    property bool status3D: false
+
     property string currentAppId
     onCurrentAppIdChanged: {
         currentApplicationId = currentAppId
@@ -78,6 +80,7 @@ WebSocket {
             mainSocket.sendCommand("channels_", "subscribe", "ssap://tv/getChannelList")
             mainSocket.sendCommand("channel_", "subscribe", "ssap://tv/getCurrentChannel")
             mainSocket.sendCommand("input_", "subscribe", "ssap://tv/getExternalInputList")
+            mainSocket.sendCommand("3dstatus_", "subscribe", "ssap://com.webos.service.tv.display/get3DStatus")
 
             mainSocket.sendCommand("get_pointer_", "request", "ssap://com.webos.service.networkinput/getPointerInputSocket")
         }
@@ -163,6 +166,9 @@ WebSocket {
                 if (currentAppId.length > 0 && devices[currentAppId] != undefined) {
                     currentApplication = devices[currentAppId].label
                 }
+            }
+            else if (msg.id.indexOf("3dstatus_") == 0) {
+                status3D = msg.payload.status3D.status
             }
             else {
                 return
@@ -280,10 +286,10 @@ WebSocket {
     }
 
     function sendOpenChannel(channelId) {
-        socket.sendCommand("", "request", "ssap://tv/openChannel", {"channelId": channelId})
+        mainSocket.sendCommand("", "request", "ssap://tv/openChannel", {"channelId": channelId})
     }
 
     function sendSwitchInput(inputId) {
-        socket.sendCommand("", "request", "ssap://tv/switchInput", {"inputId": inputId})
+        mainSocket.sendCommand("", "request", "ssap://tv/switchInput", {"inputId": inputId})
     }
 }

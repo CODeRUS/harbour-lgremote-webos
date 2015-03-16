@@ -58,6 +58,7 @@ SmoothPanel {
                         }
                         text: Theme.highlightText(model.channelNumber, listView.searchPattern, Theme.highlightColor)
                         font.bold: currentChannelId == model.channelId
+                        color: item.highlighted ? Theme.highlightColor : Theme.primaryColor
                     }
 
                     Label {
@@ -72,6 +73,7 @@ SmoothPanel {
                         wrapMode: Text.NoWrap
                         truncationMode: TruncationMode.Fade
                         font.bold: currentChannelId == model.channelId
+                        color: item.highlighted ? Theme.highlightColor : Theme.primaryColor
                     }
                 }
 

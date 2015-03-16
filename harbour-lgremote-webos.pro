@@ -1,9 +1,7 @@
 TARGET = harbour-lgremote-webos
 
-QT += core network xml xmlpatterns
-CONFIG += link_pkgconfig
+QT += network xml xmlpatterns
 CONFIG += sailfishapp
-PKGCONFIG += sailfishapp
 
 SOURCES += \
     src/main.cpp \
@@ -14,39 +12,25 @@ HEADERS += \
     src/networkobserver.h \
     src/settings.h
 
-wslibs.files = \
-    websockets/libQt5WebSockets.so \
-    websockets/libQt5WebSockets.so.5 \
-    websockets/libQt5WebSockets.so.5.3 \
-    websockets/libQt5WebSockets.so.5.3.3 \
-    websockets/README
-wslibs.path = /usr/share/harbour-lgremote-webos/lib/u8
-
-wsqml.files = websockets/harbour
-wsqml.path = /usr/share/harbour-lgremote-webos/import/u8
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 wslibs9.files = \
     websockets9/libQt5WebSockets.so \
     websockets9/libQt5WebSockets.so.5 \
     websockets9/libQt5WebSockets.so.5.3 \
-    websockets9/libQt5WebSockets.so.5.3.3 \
-    websockets9/README
-wslibs9.path = /usr/share/harbour-lgremote-webos/lib/u9
+    websockets9/libQt5WebSockets.so.5.3.3
+wslibs9.path = /usr/share/harbour-lgremote-webos/lib
 
 wsqml9.files = websockets9/harbour
-wsqml9.path = /usr/share/harbour-lgremote-webos/import/u9
+wsqml9.path = /usr/share/harbour-lgremote-webos/import
 
 images.files = images
 images.path = /usr/share/harbour-lgremote-webos
 
-readme.files = LIB_README_FOR_QA
-readme.path = /usr/share/harbour-lgremote-webos/lib
-
-INSTALLS += wslibs wsqml wslibs9 wsqml9 images readme
+INSTALLS += wslibs9 wsqml9 images
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \
-    rpm/harbour-lgremote-webos.changes.in \
     rpm/harbour-lgremote-webos.spec \
     harbour-lgremote-webos.desktop \
     harbour-lgremote-webos.png \
@@ -67,4 +51,3 @@ OTHER_FILES += \
     qml/pages/InputPanel.qml \
     qml/pages/PointerSocket.qml \
     qml/pages/MainSocket.qml
-

@@ -11,6 +11,7 @@ MouseArea {
 
     property alias title: label.text
     property alias titleSize: label.font.pixelSize
+    property alias bold: label.font.bold
     property alias icon: image.imageSource
     property alias color: background.color
     property int borderWidth: root.down ? 0 : 2

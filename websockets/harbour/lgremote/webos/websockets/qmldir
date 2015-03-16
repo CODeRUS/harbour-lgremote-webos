@@ -1,4 +1,0 @@
-module harbour.lgremote.webos.websockets
-plugin declarative_qmlwebsockets
-classname QtWebSocketsDeclarativeModule
-typeinfo plugins.qmltypes

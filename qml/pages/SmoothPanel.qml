@@ -29,7 +29,7 @@ Rectangle {
 
     color: "#80000000"
 
-    ParallelAnimation {
+    SequentialAnimation {
         id: showAnimation
         NumberAnimation {
             target: panel
@@ -43,7 +43,7 @@ Rectangle {
             property: "y"
             from: Screen.height
             to: panel.topMargin
-            duration: 300
+            duration: 100
         }
     }
 
@@ -54,7 +54,7 @@ Rectangle {
             property: "opacity"
             from: 1.0
             to: 0.0
-            duration: 300
+            duration: 200
         }
         NumberAnimation {
             target: mover
@@ -75,7 +75,7 @@ Rectangle {
         id: mover
         width: panel.width
         height: panel.height - panel.topMargin
-        y: panel.topMargin
+        y: Screen.height
         clip: true
     }
 }

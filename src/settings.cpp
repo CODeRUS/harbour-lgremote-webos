@@ -1,5 +1,4 @@
 #include "settings.h"
-#include <QProcess>
 
 Settings::Settings(QObject *parent) :
     QObject(parent)
@@ -10,20 +9,11 @@ Settings::Settings(QObject *parent) :
     settings.sync();
     QString code = settings.value("code", "demo").toString();
     checkActivation(code);
-
-    QProcess *app = new QProcess(this);
-    app->start("/bin/rpm", QStringList() << "-qa" << "--queryformat" << "%{version}" <<  "harbour-lgremote-webos");
-    QObject::connect(app, SIGNAL(readyRead()), this, SLOT(onVersionReply()));
 }
 
 QString Settings::bannerPath() const
 {
     return _bannerPath;
-}
-
-QString Settings::version() const
-{
-    return _version;
 }
 
 void Settings::checkActivation(const QString &code)
@@ -42,15 +32,6 @@ void Settings::onActivationReply()
     if (reply) {
         _bannerPath = QString::fromUtf8(reply->readAll());
         Q_EMIT bannerPathChanged();
-    }
-}
-
-void Settings::onVersionReply()
-{
-    QProcess *app = qobject_cast<QProcess*>(sender());
-    if (app) {
-        _version = app->readAll();
-        Q_EMIT versionChanged();
     }
 }
 

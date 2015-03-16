@@ -16,26 +16,19 @@ public:
     explicit Settings(QObject *parent = 0);
 
     Q_PROPERTY(QString bannerPath READ bannerPath NOTIFY bannerPathChanged)
-    Q_PROPERTY(QString version READ version NOTIFY versionChanged)
-
-    QString bannerPath() const;
-    QString version() const;
-
     Q_INVOKABLE void checkActivation(const QString &code);
 
 private:
-    QString _bannerPath;
-    QString _version;
+    QString bannerPath() const;
 
+    QString _bannerPath;
     QNetworkAccessManager *nam;
 
 private slots:
     void onActivationReply();
-    void onVersionReply();
 
 signals:
     void bannerPathChanged();
-    void versionChanged();
 
 public slots:
     QString getAuthMessage(const QString &ip) const;

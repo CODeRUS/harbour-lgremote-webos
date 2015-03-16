@@ -5,6 +5,7 @@ SmoothPanel {
     id: panel
     property PointerSocket socket
     topMargin: height - content.height
+    property bool status3D: false
 
     Column {
         id: content
@@ -88,6 +89,9 @@ SmoothPanel {
             }
             ControlButton {
                 width: panel.width / 3
+                title: qsTr("3D")
+                bold: status3D
+                onClicked: socket.sendInput("button", "3D_MODE")
             }
         }
 

@@ -173,7 +173,20 @@ Page {
                 titleSize: height / 2
                 color: down ? Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity) : "transparent"
                 borderWidth: 0
-                onClicked: mainSocket.sendVolumeDown() //pointerSocket.sendInput("button", "VOLUMEDOWN")
+                onPressed: {
+                    mainSocket.sendVolumeDown()
+                    downTimer.interval = 400
+                    downTimer.start()
+                }
+                onReleased: downTimer.stop()
+                Timer {
+                    id: downTimer
+                    repeat: true
+                    onTriggered: {
+                        interval = 60
+                        mainSocket.sendVolumeDown()
+                    }
+                }
             }
 
             ProgressCircleBase {
@@ -211,7 +224,20 @@ Page {
                 titleSize: height / 2
                 color: down ? Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity) : "transparent"
                 borderWidth: 0
-                onClicked: mainSocket.sendVolumeUp() //pointerSocket.sendInput("button", "VOLUMEUP")
+                onPressed: {
+                    mainSocket.sendVolumeUp()
+                    upTimer.interval = 400
+                    upTimer.start()
+                }
+                onReleased: upTimer.stop()
+                Timer {
+                    id: upTimer
+                    repeat: true
+                    onTriggered: {
+                        interval = 60
+                        mainSocket.sendVolumeUp()
+                    }
+                }
             }
 
             ControlButton {
@@ -298,7 +324,7 @@ Page {
     ActionsPanel {
         id: actions
         socket: pointerSocket
-        //topMargin: content.height + content.anchors.topMargin
+        status3D: mainSocket.status3D
     }
 
     ApplicationsPanel {

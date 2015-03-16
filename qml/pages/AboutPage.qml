@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
-    Flickable {
+    SilicaFlickable {
         anchors.fill: page
         contentHeight: content.height
 
@@ -31,14 +31,14 @@ Page {
             }
 
             Label {
-                text: qsTr("version %1").arg(settings.version)
+                text: qsTr("version %1").arg(Qt.application.version)
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
             }
 
             Label {
-                text: qsTr("by coderus in 0x7DE")
+                text: qsTr("by coderus in 0x7DF")
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
@@ -65,15 +65,6 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     Qt.openUrlExternally("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ovi.coderus%40gmail%2ecom&lg=en&lc=US&item_name=Donation%20for%20coderus%20webOS%20TV%20Remote&no_note=0&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHostedGuest")
-                }
-            }
-
-            Button {
-                text: "PayPal USD"
-                width: 300
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    Qt.openUrlExternally("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ovi.coderus%40gmail%2ecom&lg=en&lc=US&item_name=Donation%20for%20coderus%20webOS%20TV%20Remote&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHostedGuest")
                 }
             }
 
