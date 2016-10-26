@@ -2,6 +2,9 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 import harbour.lgremote.webos.websockets 1.0
 import "pages"
+;import Sailfish.Media 1.0
+;import org.nemomobile.policy 1.0
+;import org.nemomobile.configuration 1.0
 
 ApplicationWindow
 {
@@ -20,8 +23,6 @@ ApplicationWindow
 
     property string coverIconLeft: "../../images/icon-cover-pause.png"
     property string coverIconRight: "../../images/icon-cover-play.png"
-
-    property QtObject configuration
 
     function coverLeftClicked() {
         pauseAction()
@@ -49,19 +50,16 @@ ApplicationWindow
     initialPage: Component { DiscoverPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
-    Component.onCompleted: {
-        var volumeControlItem = Qt.createQmlObject("import QtQuick 2.1;" +
-        "import Sailfish.Media 1.0;" +
-        "import org.nemomobile.policy 1.0;" +
-        "Item {
-            id: root
-            signal volumeUp
-            signal volumeDown
+        property var configuration: ConfigurationValue {
+            key: "/apps/harbour-lgremote-webos/touchpadAcceleration"
+            defaultValue: 1.0
+        }
+
             MediaKey {
                 enabled: keysResource.acquired
                 key: Qt.Key_VolumeUp
                 onPressed: {
-                    root.volumeUp()
+                    volumeUpAction()
                     upTimer.interval = 400
                     upTimer.start()
                 }
@@ -71,7 +69,7 @@ ApplicationWindow
                     repeat: true
                     onTriggered: {
                         interval = 60
-                        root.volumeUp()
+                        volumeUpAction()
                     }
                 }
             }
@@ -79,7 +77,7 @@ ApplicationWindow
                 enabled: keysResource.acquired
                 key: Qt.Key_VolumeDown
                 onPressed: {
-                    root.volumeDown()
+                    volumeDownAction()
                     downTimer.interval = 400
                     downTimer.start()
                 }
@@ -89,28 +87,18 @@ ApplicationWindow
                     repeat: true
                     onTriggered: {
                         interval = 60
-                        root.volumeDown()
+                        volumeDownAction()
                     }
                 }
             }
             Permissions {
                 id: permissions
                 enabled: appWindow.applicationActive && appWindow.coverActionActive
-                applicationClass: \"player\"
+                applicationClass: "player"
                 Resource {
                     id: keysResource
                     type: Resource.ScaleButton
                     optional: true
                 }
             }
-        }", appWindow)
-        volumeControlItem.volumeUp.connect(appWindow.volumeUpAction)
-        volumeControlItem.volumeDown.connect(appWindow.volumeDownAction)
-
-        configuration = Qt.createQmlObject("import org.nemomobile.configuration 1.0;" +
-        "ConfigurationValue {
-            key: \"/apps/harbour-lgremote-webos/touchpadAcceleration\"
-            defaultValue: 1.0
-        }", appWindow)
-    }
 }
