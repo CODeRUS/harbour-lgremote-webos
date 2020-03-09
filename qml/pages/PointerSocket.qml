@@ -1,5 +1,5 @@
 import QtQuick 2.1
-import harbour.lgremote.webos.websockets 1.0
+;import QtWebSockets 1.1
 
 WebSocket {
     id: pointerSocket

@@ -1,6 +1,6 @@
 TARGET = harbour-lgremote-webos
 
-QT += network xml xmlpatterns
+QT += network xml xmlpatterns websockets
 CONFIG += sailfishapp
 
 SOURCES += \
@@ -14,20 +14,10 @@ HEADERS += \
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
-wslibs9.files = \
-    websockets9/libQt5WebSockets.so \
-    websockets9/libQt5WebSockets.so.5 \
-    websockets9/libQt5WebSockets.so.5.3 \
-    websockets9/libQt5WebSockets.so.5.3.3
-wslibs9.path = /usr/share/harbour-lgremote-webos/lib
-
-wsqml9.files = websockets9/harbour
-wsqml9.path = /usr/share/harbour-lgremote-webos/import
-
 images.files = images
 images.path = /usr/share/harbour-lgremote-webos
 
-INSTALLS += wslibs9 wsqml9 images
+INSTALLS += images
 
 OTHER_FILES += \
     qml/cover/CoverPage.qml \

@@ -1,7 +1,7 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import harbour.lgremote.webos.websockets 1.0
 import "pages"
+;import QtWebSockets 1.1
 ;import Sailfish.Media 1.0
 ;import org.nemomobile.policy 1.0
 ;import org.nemomobile.configuration 1.0
